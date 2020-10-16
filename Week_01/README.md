@@ -32,7 +32,6 @@
 
 ### 4.2 自定义
 - 继承自java.lang.ClassLoader,重写它的findClass方法
-- 将class字节码数组转换为Class类
-- 调用loadClass方法
+- 加解密，改变字节规则
  
 
