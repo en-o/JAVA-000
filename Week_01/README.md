@@ -32,6 +32,6 @@
 
 ### 4.2 自定义
 - 继承自java.lang.ClassLoader,重写它的findClass方法
-- 加解密，改变字节规则
+- 加解密，项目中的xlass文件就是对class文件进行了处理类似加了密
  
 
