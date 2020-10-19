@@ -27,7 +27,7 @@ public class MyClassLoader extends ClassLoader{
         //获取路径
         String loadClassFilePath = MyClassLoader.class
                 .getResource("/Hello.xlass").getPath();
-        System.out.println(System.getProperty("user.dir"));
+//        System.out.println(System.getProperty("user.dir"));
 //        System.out.println(MyClassLoader.class.getClassLoader().getResource("hello").getPath());
 //        String loadClassFilePath = "F:/project/java/jike/JAVA-000/Week_01/Hello.class";
 
@@ -58,6 +58,8 @@ public class MyClassLoader extends ClassLoader{
             e.printStackTrace();
         }catch (NullPointerException e){
             System.err.printf("空指针异常%s",e.getMessage());
+            e.printStackTrace();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
