@@ -1,3 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 /out/
 /.idea/
+/Week_02/target/
+/Week_03/target/
+/Week_03/test_client/target/
