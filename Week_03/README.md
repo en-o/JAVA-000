@@ -19,7 +19,7 @@
 > 请求：http://localhost:1212/ ——> 代理 http://localhost:8801/
 [HttpRequestFilterImpl](/week03_3/filter/HttpRequestFilterImpl.java)
 
-![添加header](https://github.com/en-o/JAVA-000/tree/main/week03_3/image/添加header.png)
+![添加header](https://github.com/en-o/JAVA-000/tree/main/Week_03/week03_3/image/添加header.png)
 
 ![请求8801是再一次查看header](https://github.com/en-o/JAVA-000/tree/main/Week_03/week03_3/image/请求8801是再一次查看header.png)
 
