@@ -6,6 +6,7 @@
     <modules>
         <module>springAnnotation</module>
         <module>springXml</module>
+        <module>javaAop</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,3 +1,4 @@
+# 1、（选做）使Java里的动态代理，实现一个简单的AOP。
 # 2、（必做）写代码实现Spring Bean的装配，方式越多越好（XML、Annotation都可以）,提交到Github。
 - xml 跟 Annotation 
     - 他们的实现方式一摸一样，除了多加个注解 配置文件多加据注解处理器之外 有什么不同？？？
