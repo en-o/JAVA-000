@@ -8,6 +8,12 @@
         <property name="name" value="谭宁"></property>
     </bean>
 
+    <bean id="studentDao" class="com.tn.dao.StudentDao">
+        <property name="student" >
+            <bean id="student" class="com.tn.bean.Student"/>
+        </property>
+    </bean>
+
     <bean id="student1" class="com.tn.bean.Student" >
         <property name="id" value="2"></property>
         <property name="name" value="谭宁1"></property>

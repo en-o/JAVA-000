@@ -1,14 +1,8 @@
 package com.tn;
 
-
-import com.tn.bean.Student;
 import com.tn.dao.StudentDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 /**
  * @author tn
@@ -25,16 +19,8 @@ public class TestMain {
         // 通过配置文件将bean加载到容器
         ApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
         // 容器 创建 对象
-        Student student1 = (Student) context.getBean("student");
-
-        System.out.println(student1.toString());
-
-        Student student2 = (Student) context.getBean("student1");
-        System.out.println(student2.toString());
-
-        StudentDao studentDao = (StudentDao) context.getBean("studentDao");
-        studentDao.print();
+        StudentDao student1 = (StudentDao) context.getBean("studentDao");
+        student1.print();
 
     }
-
 }

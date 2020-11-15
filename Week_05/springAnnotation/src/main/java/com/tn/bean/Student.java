@@ -1,20 +1,22 @@
-package com.tn.demo.bean;
+package com.tn.bean;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 /**
  * @author tn
  * @version 1
  * @ClassName Student
- * @description 学生bean
- * @date 2020/11/13 13:53
+ * @description 学生表
+ * @date 2020/11/13 15:03
  */
+@Component("student")
 @Data
-@Component
+@ToString
 public class Student {
-
     private int id;
     private String name;
 }
