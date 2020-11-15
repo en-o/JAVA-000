@@ -20,7 +20,7 @@
     - @SpringBootApplication中的ComponentScan帮你完成了 手动写<context:component-scan base-package="com.tn" />的过程
 
 
-## [spring Annotation 的方式](https://github.com/en-o/JAVA-000/tree/main/Week_05/springAnnitation)
+## [spring Annotation 的方式](https://github.com/en-o/JAVA-000/tree/main/Week_05/springAnnotation)
 ```xml
  <!-- 
     使用注解功能时 是要注意xml中头部信息是否配置了 
