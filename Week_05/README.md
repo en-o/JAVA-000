@@ -368,7 +368,7 @@ Student(id=3, name=谭宁)
     4.编写spring。handlers和spring.schemas串联起所有部件
     5.在Bean文件中应用
     
- [我的应用](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaBean)
+ [我的应用](https://github.com/en-o/JAVA-000/blob/main/Week_05/javaBean/src/main/resources/custom.xml)
  
         1.设计配置属性和JavaBean
            参考文章中的ID 有误导性， bean中不需要定义id id是<bean的默认值> 作为对象的名字（类似uuid）
