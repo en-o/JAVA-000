@@ -8,6 +8,7 @@
         <module>springXml</module>
         <module>javaAop</module>
         <module>javaCglib</module>
+        <module>javaBean</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -360,4 +360,29 @@ Student(id=2, name=谭宁)
 Student(id=3, name=谭宁)
 ```
 # 3、（选做）实现一个Spring XML自定义配置，配置一组Bean，例如Student/Klass/School。
- - ss
+ [参考的文章](https://www.cnblogs.com/huan30/p/12790406.html)
+    
+    1.设计配置属性和JavaBean
+    2.编写XSD(XML  Schema)文件,它就是一个校验XML，定义了一些列的语法来规范XML 
+    3.编写NameSpaceHandler和BeanDefinitionParser完成解析工作
+    4.编写spring。handlers和spring.schemas串联起所有部件
+    5.在Bean文件中应用
+    
+ [我的应用](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaBean)
+ 
+        1.设计配置属性和JavaBean
+           参考文章中的ID 有误导性， bean中不需要定义id id是<bean的默认值> 作为对象的名字（类似uuid）
+        2.编写XSD(XML  Schema)文件,它就是一个校验XML，定义了一些列的语法来规范XML 
+            其中的  地址可以乱写，但是下面的四个要写成一样
+                targetNamespace="http://www.tn/student"
+                xmlns="http://www.tn/student"
+                xmlns:student="http://www.tn/student"
+                xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                                               http://www.tn/student    http://www.tn/student.xsd ">
+        3.编写NameSpaceHandler和BeanDefinitionParser完成解析工作
+            断点  发现 首先第一步是使用（NamespaceHandlerSupport）注册bean ，在是解析bean(doParse)
+        4.编写spring。handlers和spring.schemas串联起所有部件
+            跟spring说  http://www.tn/student.xsd 第文件在META-INF/student.xsd里
+            http\://www.tn/student.xsd=META-INF/student.xsd
+            http\://www.tn/student=com.tn.handler.MyNamespaceHandler
+        5.在Bean文件中应用
