@@ -2,6 +2,7 @@
    ## [接口代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaAop/src/main/java/com/tn)
    ## [cglib代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaCglib/src/main/java/com/tn)
    ![springAop](https://github.com/en-o/JAVA-000/blob/main/Week_05/resources/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202020-11-16%20095418.png)
+    
     - 静态代理是在实现类上封装一层（代理类），调用者不直接使用是实现类而是使用代理类
     - 动态代理利用反射实现静态代理。让一个代理类就能处理N个接口的的处理
     - filter 跟 Interceptor 就是一个动态代理类        
