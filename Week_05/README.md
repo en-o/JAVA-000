@@ -1,5 +1,10 @@
 # 1、（选做）使Java里的动态代理，实现一个简单的AOP。
-   ## [代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaAop/src/main/java/com/tn)
+   ## [接口代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaAop/src/main/java/com/tn)
+   ## [cglib代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaCglib/src/main/java/com/tn)
+   ![springAop](https://github.com/en-o/JAVA-000/tree/main/Week_05/resources/屏幕截图%202020-11-16%20095418.png)
+    - 静态代理是在实现类上封装一层（代理类），调用者不直接使用是实现类而是使用代理类
+    - 动态代理利用反射实现静态代理。让一个代理类就能处理N个接口的的处理
+    - filter 跟 Interceptor 就是一个动态代理类        
 # 2、（必做）写代码实现Spring Bean的装配，方式越多越好（XML、Annotation都可以）,提交到Github。
 - xml 跟 Annotation 
     - 他们的实现方式一摸一样，除了多加个注解 配置文件多加据注解处理器之外 有什么不同？？？
@@ -19,7 +24,7 @@
 - Annotation的自动专配 配 springboot完美实现 一个xml配置都不需要了 
     - @SpringBootApplication中的ComponentScan帮你完成了 手动写<context:component-scan base-package="com.tn" />的过程
 
-
+    
 ## [spring Annotation 的方式](https://github.com/en-o/JAVA-000/tree/main/Week_05/springAnnotation)
 ```xml
  <!-- 
