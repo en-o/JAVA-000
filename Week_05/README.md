@@ -1,5 +1,6 @@
 # 1、（选做）使Java里的动态代理，实现一个简单的AOP。
    ## [接口代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaAop/src/main/java/com/tn/Proxy)
+   ## [aspectj](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaAop/src/main/java/com/tn/AopMain)
    ## [cglib代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaCglib/src/main/java/com/tn/CgLib)
    ![springAop](https://github.com/en-o/JAVA-000/blob/main/Week_05/resources/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202020-11-16%20095418.png)
     

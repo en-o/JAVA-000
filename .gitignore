@@ -6,3 +6,5 @@
 /Week_03/test_client/target/
 /Week_05/springXml/target/
 /Week_05/springAnnotation/target/
+*.class
+*.iml
