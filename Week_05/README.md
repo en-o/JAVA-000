@@ -1,11 +1,12 @@
 # 1、（选做）使Java里的动态代理，实现一个简单的AOP。
-   ## [接口代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaAop/src/main/java/com/tn)
-   ## [cglib代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaCglib/src/main/java/com/tn)
+   ## [接口代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaAop/src/main/java/com/tn/Proxy)
+   ## [cglib代理代码](https://github.com/en-o/JAVA-000/tree/main/Week_05/javaCglib/src/main/java/com/tn/CgLib)
    ![springAop](https://github.com/en-o/JAVA-000/blob/main/Week_05/resources/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202020-11-16%20095418.png)
     
     - 静态代理是在实现类上封装一层（代理类），调用者不直接使用是实现类而是使用代理类
     - 动态代理利用反射实现静态代理。让一个代理类就能处理N个接口的的处理
     - filter 跟 Interceptor 就是一个动态代理类        
+    - aop 就是 一个代理
 # 2、（必做）写代码实现Spring Bean的装配，方式越多越好（XML、Annotation都可以）,提交到Github。
 - xml 跟 Annotation 
     - 他们的实现方式一摸一样，除了多加个注解 配置文件多加据注解处理器之外 有什么不同？？？
@@ -357,3 +358,5 @@ Student(id=2, name=谭宁)
 2020-11-15 21:14:44.802  INFO 7132 --- [           main] com.tn.demo.DemoApplication              : Started DemoApplication in 1.348 seconds (JVM running for 2.12)
 Student(id=3, name=谭宁)
 ```
+# 3、（选做）实现一个Spring XML自定义配置，配置一组Bean，例如Student/Klass/School。
+ - ss

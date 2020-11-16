@@ -1,4 +1,4 @@
-package com.tn.method;
+package com.tn.inter1;
 
 /**
  * @author tn

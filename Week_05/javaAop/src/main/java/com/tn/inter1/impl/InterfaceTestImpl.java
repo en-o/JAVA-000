@@ -1,4 +1,6 @@
-package com.tn.aop;
+package com.tn.inter1.impl;
+
+import com.tn.inter1.InterfaceTest;
 
 /**
  * @author tn
@@ -7,7 +9,7 @@ package com.tn.aop;
  * @description
  * @date 2020/11/15 22:00
  */
-public class AopTestImpl implements AopTest {
+public class InterfaceTestImpl implements InterfaceTest {
 
     @Override
     public void tn() {

@@ -1,6 +1,6 @@
-package com.tn.staop;
+package com.tn.stProxy;
 
-import com.tn.aop.AopTest;
+import com.tn.inter1.InterfaceTest;
 
 /**
  * @author tn
@@ -9,11 +9,11 @@ import com.tn.aop.AopTest;
  * @description
  * @date 2020/11/15 22:00
  */
-public class AopSt implements AopTest {
+public class ProxySt implements InterfaceTest {
 
-    private AopTest aopTest;
+    private InterfaceTest aopTest;
 
-    public AopSt(AopTest aopTest) {
+    public ProxySt(InterfaceTest aopTest) {
         this.aopTest = aopTest;
     }
 

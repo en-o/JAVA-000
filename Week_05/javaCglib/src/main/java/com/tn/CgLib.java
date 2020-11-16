@@ -1,7 +1,7 @@
 package com.tn;
 
 import com.tn.inerceptor.MyInerceptor;
-import com.tn.method.Student;
+import com.tn.inter1.Student;
 import net.sf.cglib.proxy.Enhancer;
 
 /**

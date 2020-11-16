@@ -1,4 +1,4 @@
-package com.tn.dyaop;
+package com.tn.dyProxy;
 
 
 import java.lang.reflect.InvocationHandler;
@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  * @description
  * @date 2020/11/15 22:04
  */
-public class AopDy implements InvocationHandler {
+public class ProxyDy implements InvocationHandler {
 
     private Object object;
 
@@ -32,11 +32,11 @@ public class AopDy implements InvocationHandler {
                 interfaces,this);
     }
 
-    public AopDy(Object object) {
+    public ProxyDy(Object object) {
         this.object = object;
     }
 
-    public AopDy() {
+    public ProxyDy() {
     }
 
     /**

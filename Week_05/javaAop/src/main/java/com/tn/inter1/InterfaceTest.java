@@ -1,12 +1,13 @@
-package com.tn.aop;
+package com.tn.inter1;
 
 /**
  * 测试 代理 的 接口
  * @author tnnn
  */
-public interface AopTest2 {
+public interface InterfaceTest {
+
     /**
      * 接口代理
      */
-    void tn2();
+    void tn();
 }
