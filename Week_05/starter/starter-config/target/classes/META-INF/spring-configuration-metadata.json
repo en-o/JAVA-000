@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "student",
+      "type": "com.tn.starter.entity.Student",
+      "sourceType": "com.tn.starter.entity.Student"
+    }
+  ],
+  "properties": [
+    {
+      "name": "student.id",
+      "type": "java.lang.Integer",
+      "sourceType": "com.tn.starter.entity.Student",
+      "defaultValue": 0
+    },
+    {
+      "name": "student.name",
+      "type": "java.lang.String",
+      "sourceType": "com.tn.starter.entity.Student"
+    }
+  ],
+  "hints": []
+}

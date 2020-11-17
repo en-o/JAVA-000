@@ -386,7 +386,7 @@ Student(id=3, name=谭宁)
             http\://www.tn/student.xsd=META-INF/student.xsd
             http\://www.tn/student=com.tn.handler.MyNamespaceHandler
         5.在Bean文件中应用
-#（必做）给前面课程提供的Student/Klass/School 实现自动配置和Starter
+# 4（必做）给前面课程提供的Student/Klass/School 实现自动配置和Starter
 
 ## 1. 让student 自动配置 且从配置文件获取数据
 
