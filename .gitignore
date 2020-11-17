@@ -8,3 +8,7 @@
 /Week_05/springAnnotation/target/
 *.class
 *.iml
+/Week_05/starter/.mvn/
+/Week_05/starter/starter-config/.mvn/
+/Week_05/starter/starter-use/.mvn/
+/Week_05/starter/starter-use/target/
