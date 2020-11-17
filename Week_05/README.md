@@ -386,3 +386,98 @@ Student(id=3, name=谭宁)
             http\://www.tn/student.xsd=META-INF/student.xsd
             http\://www.tn/student=com.tn.handler.MyNamespaceHandler
         5.在Bean文件中应用
+#（必做）给前面课程提供的Student/Klass/School 实现自动配置和Starter
+
+## 1. 让student 自动配置 且从配置文件获取数据
+
+- 我很久之前在尝试搭建自己的组件时就接触到了[自动配置 我的笔记](https://www.yuque.com/tanning/epv4c9/yqqygr)
+    - 遇到他的原因时 我写好的模块 打成jar之后 使用时引入该jar每次都要手动的在启动类上加入扫描，很麻烦，然后无意间看到了这个，便开始了尝试，尝试的结果很满意，再也不用在使用时扫描指定包路径了
+    - 同时 关于 starter ，在自动配置时也看到了他，我参考别人的限定性框架时也看到了他，一直都没明白这个是什么，也没有去深究
+        - 现在大致明白了，他就是一个集合，一个类似工具类的集合，我现在就在着手把我封装的一些限定性的模块，根据类别名称一个个starter 让开发时根据需求直接引入这个依赖集合，就不用在一个个的去引入依赖了
+    ![我现在在弄得一个限定性框架](https://github.com/en-o/JAVA-000/blob/main/Week_05/resources/屏幕截图 2020-11-16 095418.png)
+
+```
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Configuration
+@ConfigurationProperties(prefix = "student")
+public class Student implements Serializable {
+    
+    private int id;
+    private String name;
+    
+    public void init(){
+        System.out.println("hello...........");
+    }
+    
+    public Student create(){
+        return new Student(101,"KK101");
+    }
+}
+```
+### 1.2 引入starter-use 使用
+- 没有实现自动配置
+```
+Description:
+
+A component required a bean of type 'com.tn.starter.entity.Student' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.tn.starter.entity.Student' in your configuration.
+
+
+Process finished with exit code 1
+
+OR
+
+Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.tn.starter.entity.Student' available
+
+```
+
+- 实现自动配置 创建文件 resources/META-INF/spring.factories
+
+```
+自动装配  = 需要专配的文件
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.tn.starter.entity.Student
+
+2020-11-17 21:17:48.182  INFO 8256 --- [           main] com.tn.starteruse.StarterUseApplication  : Started StarterUseApplication in 0.756 seconds (JVM running for 1.576)
+Student(id=1, name=谭宁)
+```
+
+- 其实也可以手动装配 在 spring的启动类上加入 包路径扫描 
+```java
+@SpringBootApplication(scanBasePackages = "com.tn")
+```
+
+## 2. 让 Klass 自动配置
+```java
+@Data
+public class Klass { 
+
+    //一定要写  要不然list注入不进来
+    @Autowired
+    List<Student> students;
+    
+    public void dong(){
+        System.out.println(this.getStudents());
+    }
+
+}
+//构建配置文件
+@Configuration
+@Import({Student.class,Klass.class})
+public class KlassConfiguration {
+
+}
+# 自动装配
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.tn.starter.config.KlassConfiguration
+
+```
+
+## 3. 让 School 同上
+
+## 4. starter  就是将School Klass Student 三个配置 集中到一个地方去，然后引入这个starter就可以直接用这三个配置
