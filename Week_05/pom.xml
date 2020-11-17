@@ -9,6 +9,7 @@
         <module>javaAop</module>
         <module>javaCglib</module>
         <module>javaBean</module>
+        <module>JDBC</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

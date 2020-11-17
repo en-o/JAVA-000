@@ -481,3 +481,368 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.tn.starter.co
 ## 3. 让 School 同上
 
 ## 4. starter  就是将School Klass Student 三个配置 集中到一个地方去，然后引入这个starter就可以直接用这三个配置
+
+# 5. 研究一下JDBC 接口和数据库连接池，掌握它们的设计和用法
+**[代码](https://github.com/en-o/JAVA-000/blob/main/Week_05/JDBC/src/main/java/com/tn/test/Demo.java) **
+- jdbc 
+```java
+package com.tn.util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
+public class JdbcDataBaseUtil {
+	/**
+	 * 初始化配置 不要调用
+	 */
+	public static void config(String driver){
+		try{
+//			Properties prop= new Properties();
+//
+//			InputStream is= JdbcDataBaseUtil.class.getClassLoader().getResourceAsStream("database.properties");
+//			prop.load(is);
+			Class.forName(driver);
+
+		}catch(Exception e){
+			e.printStackTrace();
+			System.err.printf("MySqlDataBaseUtil 有错  数据库登录名字：%S\n  数据库地址：%s\n",driver);
+		}
+	}
+	/**
+	 * 获取数据库连接
+	 * @return
+	 * @throws SQLException 
+	 */
+	public static Connection getConnection(String uName,String pwd,String urls,String driver) {
+		/*
+		 * 通过连接池获取一个空闲连接
+		 */
+		config(driver);
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(urls, uName, pwd);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.printf("MySqlDataBaseUtil数据库连接失败 =数据库登录名字：%S\n  数据库地址：%s\n",uName,urls);
+		}
+
+		return conn;
+	}
+	/**
+	 * 关闭数据库连接
+	 */
+	public static void closeConnection(Connection conn){
+		System.err.println("连接名:"+conn);
+		try{
+			if(conn!=null) {
+				System.err.println("关闭连接:"+conn);
+				conn.close();
+			}
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+//
+//		public static void main(String[] args) throws SQLException {
+//			
+//			
+//
+//		Connection getConn = JdbcDataBaseUtil.getConnection("userName","password","url","drive");
+//
+//	} 
+
+
+}
+
+```
+
+- hikariCp
+```java
+package com.tn.util;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+/**
+ * @author tn
+ * @version 1
+ * @ClassName HikariCP
+ * @description
+ * @date 2020/11/18 0:00
+ */
+public class HikariCP {
+
+
+    /**
+     * 获取数据库连接
+     * @return
+     * @throws SQLException
+     */
+    public static Connection getConnection(String uName, String pwd, String urls, String driver) {
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(driver);
+        hikariConfig.setJdbcUrl(urls);
+        hikariConfig.setUsername(uName);
+        hikariConfig.setPassword(pwd);
+
+//        最小空闲连接数量
+        hikariConfig.addDataSourceProperty("minimumIdle", 5);
+//        空闲连接存活最大时间， /S
+        hikariConfig.addDataSourceProperty("idleTimeout", 600000);
+//        连接池最大连接数，默认是10
+        hikariConfig.addDataSourceProperty("maximumPoolSize", 10);
+//        连接池名称
+        hikariConfig.addDataSourceProperty("poolName", "jdbcHikari");
+//        数据库连接超时时间,默认30秒，即30000
+        hikariConfig.addDataSourceProperty("connectionTimeout", 30000);
+        hikariConfig.addDataSourceProperty("connectionTestQuery", "SELECT 1");
+        // HikariDataSource 也可以配置
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.printf("MySqlDataBaseUtil数据库连接失败 =数据库登录名字：%S\n  数据库地址：%s\n",uName,urls);
+        }
+
+        return conn;
+    }
+
+    /**
+     * 关闭数据库连接
+     */
+    public static void closeConnection( HikariDataSource dataSource){
+        System.err.println("连接名:"+dataSource);
+        try{
+            if(dataSource!=null) {
+                System.err.println("关闭连接:"+dataSource);
+                dataSource.close();
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+}
+
+```
+
+## 5.1）使用JDBC 原生接口，实现数据库的增删改查操作。1）使用JDBC 原生接口，实现数据库的增删改查操作。 
+```java
+package com.tn.test;
+
+import com.tn.util.JdbcDataBaseUtil;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+
+/**
+ * @author tn
+ * @version 1
+ * @ClassName Demo
+ * @description
+ * @date 2020/11/17 22:28
+ */
+public class Demo {
+    static String user = "root";
+    static String password = "root";
+    static String url = "jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false";
+    static String Driver = "com.mysql.cj.jdbc.Driver";
+
+    static String selectSql = " select id,`name` from test_user " ;
+    static String updateSql = " update test_user set name='张三' where id = 1 " ;
+    static String deleteSql = " delete from test_user where id = 1 " ;
+    static String insertSql = " insert into test_user values(1,'谭宁') " ;
+
+    public static void main(String[] args) {
+        //建立一个结果集，用来保存查询出来的结果
+        Connection getConn = JdbcDataBaseUtil.getConnection(user, password, url, Driver);
+
+        try {
+           new Demo().ysJDBC(getConn.createStatement());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+             JdbcDataBaseUtil.closeConnection(getConn);
+        }
+    }
+
+
+    public void ysJDBC(Statement statement){
+        try {
+            // 查询
+            printResultSet(statement.executeQuery(selectSql));
+
+            System.out.println("执行插入"+ ((statement.executeUpdate(insertSql)>0)?true:false));
+            // 查询
+            printResultSet(statement.executeQuery(selectSql));
+
+            System.out.println("执行更新"+ ((statement.executeUpdate(updateSql)>0)?true:false));
+            // 查询
+            printResultSet(statement.executeQuery(selectSql));
+
+            System.out.println("执行删除"+ statement.execute(deleteSql));
+            // 查询
+            printResultSet(statement.executeQuery(selectSql));
+
+
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+    }
+
+
+    public static void printResultSet(ResultSet resultSet){
+
+        try {
+            if (resultSet.next()) {
+                System.out.println("\n查询成功："+"id:"+resultSet.getString("id")+",name:"+resultSet.getString("name"));
+            }else {
+                System.out.println("\n没有数据");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+
+    }
+}
+
+```
+
+## 5.2）使用事务，PrepareStatement 方式，批处理方式，改进上述操作。
+
+- 可以用 getConn.setAutoCommit(false); 把sql执行挂起
+- 可以用 insertPs.addBatch(); 把需要执行的若干sql语句装载到一起
+- 可以用 insertPs.executeBatch(); 进行批量处理 - 
+    - 03 20 69 6e 73 65 72 74     .   i n s e r t
+      20 69 6e 74 6f 20 74 65       i n t o   t e
+      73 74 5f 75 73 65 72 28     s t _ u s e r (
+      60 6e 61 6d 65 60 29 20     ` n a m e ` )  
+      76 61 6c 75 65 73 28 27     v a l u e s ( '
+      e8 b0 ad e5 ae 81 27 29     . . . . . . ' )
+      20                           
+
+- 最后必须手动提交  getConn.commit(); 才能真正的对数据库进行操作
+- 最好 清空一下Batch 小心出现脏数据 insertPs.clearBatch();
+
+```java
+public class Demo {
+    static String user = "root";
+    static String password = "tn@123456";
+    static String url = "jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false";
+    static String Driver = "com.mysql.cj.jdbc.Driver";
+
+
+
+    public static void main(String[] args) {
+        //建立一个结果集，用来保存查询出来的结果
+        Connection getConn = JdbcDataBaseUtil.getConnection(user, password, url, Driver);
+        Demo demo = new Demo();
+        try {
+            demo.prepareStatementJDBC(getConn);
+        } finally {
+            JdbcDataBaseUtil.closeConnection(getConn);
+        }
+    }
+
+    public void prepareStatementJDBC(Connection getConn){
+        //插入
+        String insertSql= " insert into test_user(`name`) values(?) ";
+        String selectSql = " select id,`name` from test_user " ;
+        String updateSql = " update test_user set name=? where name = ? " ;
+        String deleteSql = " delete from test_user where name = ? " ;
+        try {
+            PreparedStatement selectPs = getConn.prepareStatement(selectSql);
+            // 查询
+            printResultSet(selectPs.executeQuery());
+
+            //在写到利用数据库查询数据的时候，会用到的语句rs.last()和rs.beforeFirst()，这俩个方法会报错，原因是微软的SQL没有这个方法，需要额外添加语句。
+            PreparedStatement insertPs = getConn.prepareStatement(insertSql);
+//            commit设置为false,不让它自动提交
+            getConn.setAutoCommit(false);
+            insertPs.setString(1,"谭宁");
+            // 将 数据1 添加到此 PreparedStatement 中缓存。
+            insertPs.addBatch();
+
+            insertPs.setString(1,"谭宁2");
+            // 将 数据2 添加到此 PreparedStatement 中缓存。
+            insertPs.addBatch();
+
+            insertPs.setString(1,"谭宁3");
+            // 将 数据3 添加到此 PreparedStatement 中缓存。
+            insertPs.addBatch();
+            // 提交一批要执行的更新命令
+            int[] ints = insertPs.executeBatch();
+            for (int i = 0; i < ints.length; i++) {
+                System.out.println("（数据"+i+"）执行插入"+ ((ints[i]>0)?true:false));
+            }
+            // 成功执行完所有的插入操作，进行手动提交 不提交 数据是不会到数据库中去的
+            getConn.commit();
+            insertPs.clearBatch();
+            // 查询
+            printResultSet(selectPs.executeQuery());
+
+
+
+            PreparedStatement updatePs = getConn.prepareStatement(updateSql);
+            getConn.setAutoCommit(false);
+            updatePs.setString(1,"谭宁u1");
+            updatePs.setString(2,"谭宁");
+            updatePs.addBatch();
+            updatePs.setString(1,"谭宁u2");
+            updatePs.setString(2,"谭宁2");
+            updatePs.addBatch();
+            updatePs.setString(1,"谭宁u3");
+            updatePs.setString(2,"谭宁3");
+            updatePs.addBatch();
+            int[] ints1 = updatePs.executeBatch();
+            getConn.commit();
+            for (int i = 0; i < ints1.length; i++) {
+                System.out.println("（数据"+i+"）执行更新"+ ((ints1[i]>0)?true:false));
+            }
+            // 查询
+            printResultSet(selectPs.executeQuery());
+
+
+            PreparedStatement deletePs = getConn.prepareStatement(deleteSql);
+            getConn.setAutoCommit(false);
+            deletePs.setString(1,"谭宁u1");
+            deletePs.addBatch();
+            deletePs.setString(1,"谭宁u2");
+            deletePs.addBatch();
+            deletePs.setString(1,"谭宁u3");
+            deletePs.addBatch();
+            int[] ints2 = deletePs.executeBatch();
+            getConn.commit();
+            for (int i = 0; i < ints2.length; i++) {
+                System.out.println("（数据"+i+"）执行删除"+ ((ints2[i]>0)?true:false));
+            }
+            // 查询
+            printResultSet(selectPs.executeQuery());
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+```
+
+## 5.3 配置Hikari 连接池，改进上述操作。提交代码到Github。
+```java
+//        Connection getConn = JdbcDataBaseUtil.getConnection(user, password, url, Driver);
+        Connection getConn = HikariCP.getConnection(user, password, url, Driver);
+```
