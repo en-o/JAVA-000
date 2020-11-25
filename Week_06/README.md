@@ -1,3 +1,4 @@
+```mysql
 /*
  Navicat Premium Data Transfer
 
@@ -61,3 +62,5 @@ CREATE TABLE `tb_user`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+```
