@@ -26,6 +26,7 @@ CREATE TABLE `tb_order`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `uuid` bigint NOT NULL COMMENT '订单雪花ID',
   `user_uuid` bigint NOT NULL COMMENT '用户雪花ID',
+  `products_uuid` bigint NOT NULL COMMENT '商品雪花ID',
   `user_name` bigint NOT NULL COMMENT '用户名',
   `title` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品标题',
   `description` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品描述',
