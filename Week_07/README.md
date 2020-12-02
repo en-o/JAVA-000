@@ -41,7 +41,6 @@ public static void main(String[] args) {
 	}
 ```
 
-
 ## jdbc jdbc 
 - 用时：896012ms (≈15min)
 ```java
@@ -144,7 +143,6 @@ public static void main(String[] args) {
 	}
 ```
 
-
 ## 存储过程
 - 用时： 896.753s （≈14min）
 ```sql
@@ -183,3 +181,60 @@ call round_test();
 		System.out.println("用时：" + (endTime - startTime));
 	}
 ```
+
+# （必做）读写分离-动态切换数据源版本1.0
+## 动态切换数据源版本1.0_springboot1.5
+## 动态切换数据源版本1.0_springboot2.3.x
+- 在同一个事务中会发现数据源切换失效 (失效的原因是因为事务导致了后面的设置无效具体解决方法还在摸索)
+```java
+   /**
+    *
+    *三个sever放在一起调用就会默认使用第一个的数据源
+   
+    2020-12-03 02:34:26.433  INFO 13652 --- [nio-8080-exec-8] i.t.d.dynamic.config.DynamicDataSource   : 当前数据源是：master
+    findAllDefUserEntity(id=1, uuid=1, userName=8.0, email=8.0, phone=3306)
+    ======================================
+    2020-12-03 02:34:26.436  INFO 13652 --- [nio-8080-exec-8] i.t.d.d.c.DynamicDataSourceContextHolder : 切换至slave1数据源
+    findAllDataSource_1UserEntity(id=1, uuid=1, userName=8.0, email=8.0, phone=3306)
+    ======================================
+    2020-12-03 02:34:26.438  INFO 13652 --- [nio-8080-exec-8] i.t.d.d.c.DynamicDataSourceContextHolder : 切换至slave2数据源
+    findAllDataSource_2UserEntity(id=1, uuid=1, userName=8.0, email=8.0, phone=3306)
+    */
+    @GetMapping("/testDataSource")
+    public void testDataSource() {
+        userServer.findAllDef().forEach((it) -> System.out.println("findAllDef"+it.toString()));
+        System.out.println("======================================");
+        userServer.findAllDataSource_1().forEach((it) -> System.out.println("findAllDataSource_1"+it.toString()));
+        System.out.println("======================================");
+        userServer.findAllDataSource_2().forEach((it) -> System.out.println("findAllDataSource_2"+it.toString()));
+    }
+
+    /**
+        单独写就不会
+        2020-12-03 02:36:06.493  INFO 13652 --- [nio-8080-exec-9] i.t.d.dynamic.config.DynamicDataSource   : 当前数据源是：master
+        findAllDefUserEntity(id=1, uuid=1, userName=8.0, email=8.0, phone=3306)
+    */
+    @GetMapping("/findAllDef")
+    public void findAllDef() {
+        userServer.findAllDef().forEach((it) -> System.out.println("findAllDef"+it.toString()));
+    }
+
+   /**
+    单独写就不会
+    2020-12-03 02:36:35.505  INFO 13652 --- [nio-8080-exec-1] i.t.d.d.c.DynamicDataSourceContextHolder : 切换至slave1数据源
+    2020-12-03 02:36:35.505  INFO 13652 --- [nio-8080-exec-1] i.t.d.dynamic.config.DynamicDataSource   : 当前数据源是：slave1
+    findAllDataSource_1UserEntity(id=1, uuid=1, userName=5.7, email=5.7, phone=3326) */
+    @GetMapping("/findAllDataSource_1")
+    public void findAllDataSource_1() {
+        System.out.println("======================================");
+        userServer.findAllDataSource_1().forEach((it) -> System.out.println("findAllDataSource_1"+it.toString()));
+    }
+ 
+
+```
+- 每个版本的配置都有稍微的改变，升级很麻烦
+    - eg: spring 1.5 读取配置文件用RelaxedPropertyResolver这个，但是2.x没了
+    
+    
+# （必做）读写分离-数据库框架版本2.0
+~~~ 待续

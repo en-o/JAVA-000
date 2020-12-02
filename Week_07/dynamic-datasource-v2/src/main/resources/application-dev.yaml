@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    master:
+      password: tn@123456
+      url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Chongqing&useUnicode=true&characterEncoding=UTF-8
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      type: com.zaxxer.hikari.HikariDataSource
+    cluster:
+      - dbname: slave1
+        password: root
+        url: jdbc:mysql://127.0.0.1:3326/test?serverTimezone=Asia/Chongqing&useUnicode=true&characterEncoding=UTF-8
+        idle-timeout: 20000
+        driver-class-name: com.mysql.jdbc.Driver
+        username: root
+        type: com.zaxxer.hikari.HikariDataSource
+      - dbname: slave2
+        password: root
+        url: jdbc:mysql://127.0.0.1:3336/test?useUnicode=true&serverTimezone=Asia/Chongqing&characterEncoding=UTF-8
+        driver-class-name: com.mysql.jdbc.Driver
+        username: root

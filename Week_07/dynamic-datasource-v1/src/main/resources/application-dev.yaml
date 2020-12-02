@@ -1,0 +1,31 @@
+driver-class-name:
+  mysql: com.mysql.jdbc.Driver
+  mysql8: com.mysql.cj.jdbc.Driver
+  #  oracle: oracle.jdbc.driver.OracleDriver
+  oracle: oracle.jdbc.OracleDriver
+  sqlserver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+spring:
+  ## 配置数据库
+  datasource:
+    ## 数据库基础配置
+    username: root
+    password: tn@123456
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Chongqing&useUnicode=true&characterEncoding=utf8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    ### 更多数据源
+    names: mysql1,mysql2
+    defaultname: default
+    mysql1:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3326/test?serverTimezone=Asia/Chongqing&useUnicode=true&characterEncoding=utf8&useSSL=false
+      username: root
+      password: root
+    mysql2:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3336/test?serverTimezone=Asia/Chongqing&useUnicode=true&characterEncoding=utf8&useSSL=false
+      username: root
+      password: root
+  jpa:
+    show-sql: true
+#      password: tsg_63964454
