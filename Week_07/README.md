@@ -184,7 +184,7 @@ call round_test();
 
 # （必做）读写分离-动态切换数据源版本1.0
 ## [动态切换数据源版本1.0_springboot1.5](https://github.com/en-o/JAVA-000/tree/main/Week_07/dynamic-datasource-v2/src/main/java/io/tan/datasource/jpa)
-## [动态切换数据源版本1.0_springboot2.3.x](https://github.com/en-o/JAVA-000/tree/main/Week_07/dynamic-datasource-v1/src/main/java/io/tan/datasource/jpa)
+## [动态切换数据源版本1.0_springboot2.3.x-2.4.x都试过](https://github.com/en-o/JAVA-000/tree/main/Week_07/dynamic-datasource-v1/src/main/java/io/tan/datasource/jpa)
 - 在同一个事务中会发现数据源切换失效 (失效的原因是因为事务导致了后面的设置无效具体解决方法还在摸索)
 ```java
    /**
