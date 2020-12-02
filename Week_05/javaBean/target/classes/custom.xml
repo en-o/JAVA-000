@@ -7,6 +7,4 @@
 
     <student:student id="student" name="谭宁"  studentId="12" />
     <student:student id="student1" name="谭宁"  studentId="12" />
-    <student:klass class="com.tn.bean.Student" id="klass"  />
-
 </beans>

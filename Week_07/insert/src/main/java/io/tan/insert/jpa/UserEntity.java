@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,7 +16,7 @@ import java.io.Serializable;
  * @date 2020/12/2 23:42
  */
 @Entity
-@Table(name="tb_user2")
+@Table(name="tb_user")
 @Data
 @Builder(toBuilder = true)
 @NoArgsConstructor
@@ -27,6 +25,8 @@ public class UserEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long uuid;

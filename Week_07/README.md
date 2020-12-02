@@ -7,10 +7,11 @@
 - 一个连接的插入跟线程池没有关系
 - 批量插入时间缩短到了1-2min,但是每次插入 100，1000，10000，100000的差距都不是很大
 ## 存储过程
-- 循环插入花费的时间跟jdbc直接查询差不多
-
+- 循环插入花费的时间跟jdbc直接插入差不多
+## JPA
+- 循环插入花费的时间跟jdbc直接插入差不多
 ## 结论
-- 直接插入的 多种方式 效果都差不多 ，可能用多线程会快一点，还没试过
+- 直接插入的 (jpa,jdbc,sql)多种方式 效果都差不多 ，可能用多线程会快一点，还没试过
 
 ## jdbc hikari 
 - 用时：899952ms (≈15min)
@@ -160,4 +161,25 @@ begin
   commit;
 end;
 call round_test();
+```
+
+## jpa 
+- 用时： 85157ms （≈1.4min）
+```java
+	@Test
+	void contextLoads() {
+		SnowFlake snowFlake = new SnowFlake(2, 3);
+		UserEntity.UserEntityBuilder builder = UserEntity.builder();
+		List<UserEntity> listUser = new ArrayList<>();
+		UserEntity build ;
+		Long startTime = System.currentTimeMillis();
+		for (int i = 1; i <= 1000000; i++) {
+			build = builder.userName("谭" + i).email((int) Math.round(13) + "@163.com")
+					.phone(Math.round(13) + "").uuid(snowFlake.nextId()).build();
+			listUser.add(build);
+		}
+		Long endTime = System.currentTimeMillis();
+		userDao.saveAll(listUser);
+		System.out.println("用时：" + (endTime - startTime));
+	}
 ```

@@ -4,5 +4,5 @@ spring:
     ## 数据库基础配置
     username: root
     password: tn@123456
-    url: jdbc:mysql://127.0.0.1:3306/api?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver

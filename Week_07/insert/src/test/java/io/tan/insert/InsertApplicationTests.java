@@ -36,17 +36,20 @@ class InsertApplicationTests {
 
 	@Test
 	void contextLoads() {
+		SnowFlake snowFlake = new SnowFlake(2, 3);
 		UserEntity.UserEntityBuilder builder = UserEntity.builder();
 		List<UserEntity> listUser = new ArrayList<>();
 		UserEntity build ;
 		Long startTime = System.currentTimeMillis();
 		for (int i = 1; i <= 1000000; i++) {
-			build = builder.userName("谭" + i).email((int) Math.round(13) + "@163.com").phone(Math.round(13) + "").build();
+			build = builder.userName("谭" + i).email((int) Math.round(13) + "@163.com")
+					.phone(Math.round(13) + "").uuid(snowFlake.nextId()).build();
 			listUser.add(build);
 		}
+
+		userDao.saveAll(listUser);
 		Long endTime = System.currentTimeMillis();
 		System.out.println("用时：" + (endTime - startTime));
-		userDao.saveAll(listUser);
 	}
 
 
