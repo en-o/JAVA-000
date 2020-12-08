@@ -1,0 +1,20 @@
+spring:
+  shardingsphere:
+    props:
+      sql:
+        show:
+          true
+    datasource:
+      names: ds1,ds2
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3307/db1?serverTimezone=Asia/Shanghai&useSSL=false
+        username: root
+        password: root
+      ds2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3307/db2?serverTimezone=Asia/Shanghai&useSSL=false
+        username: root
+        password: root
